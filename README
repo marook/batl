@@ -7,4 +7,4 @@ A templating language based on bash shell scripts.
 ------------------------------------------------------------------------
 Usage
 
-$ batl.sh [template file] [output file]
+$ batl.sh < template.file
