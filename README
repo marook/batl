@@ -1,0 +1,10 @@
+batl
+
+A templating language based on bash shell scripts.
+
+1) Usage
+
+------------------------------------------------------------------------
+Usage
+
+$ batl.sh [template file] [output file]
