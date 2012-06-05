@@ -20,35 +20,31 @@
 
 set -e
 
-IN=$1
-OUT=$2
-
 fail() {
     echo "$1" >&2
     exit 1
 }
 
-if [ ! -e "$IN" ]
-then
-    fail "Missing input file: $IN"
-fi
+LINE_PATTERN='^\(.*\)\([$]{\(.*\)}\)\(.*\)$'
 
-if [ -z "$OUT" ]
-then
-    fail "Missing output file"
-fi
-
-cp "$IN" "$OUT"
-
-while read includeExpr
+while read line
 do
-    includePath=`echo "$includeExpr" | sed 's/${\(.*\)}/\1/'`
+    while [ -n "$line" ]
+    do
+	match=`echo "$line" | sed -e "s/$LINE_PATTERN/\2/"`
+	cmd=`echo "$line" | sed -e "s/$LINE_PATTERN/\3/"`
 
-    if [ ! -e "$includePath" ]
-    then
-	fail "Can't include file: $includePath"
-    fi
+	if [ "$match" != "\${$cmd}" ]
+	then
+	    break
+	fi
 
-    replace "$includeExpr" "`cat "$includePath"`" < "$OUT" > "$OUT.tmp"
-    mv "$OUT.tmp" "$OUT"
-done < <(grep -o '${[^}]*}' "$IN")
+	prefix=`echo "$line" | sed -e "s/$LINE_PATTERN/\1/"`
+	line=`echo "$line" | sed -e "s/$LINE_PATTERN/\4/"`
+
+	echo -n "$prefix"
+	$cmd
+    done
+
+    echo "$line"
+done
