@@ -1,0 +1,3 @@
+This template shows a batl bug:
+
+   $ <--- ${echo -n just a dollar sign}
