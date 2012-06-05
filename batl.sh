@@ -25,7 +25,9 @@ fail() {
     exit 1
 }
 
-LINE_PATTERN='^\(.*\)\([$]{\(.*\)}\)\(.*\)$'
+# TODO the [^$]* match should be a non greedy .* match. right now we have
+# a bug which can be reproduced using the examples/dollar template.
+LINE_PATTERN='^\([^$]*\)\([$]{\([^}]*\)}\)\(.*\)$'
 
 while read line
 do
