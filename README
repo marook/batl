@@ -3,8 +3,9 @@ batl
 A templating language based on bash shell scripts.
 
 1) Installation
-2) Usage
-3) Copying
+2) Template Language
+3) Usage
+4) Copying
 
 
 ------------------------------------------------------------------------
@@ -16,6 +17,18 @@ $ sudo make install
 Installing batl for your current user can be done by specifying a custom
 prefix. Make sure the prefix path is the correct one for your system:
 $ make PREFIX=~/.local install
+
+
+------------------------------------------------------------------------
+Template Language
+
+batl templates are plain text files which can contain batl expressions.
+batl expressions must be written within the following construct: ${...}
+
+A batl expression can be any shell script. Here are some examples:
+${echo -n hello world}
+${date}
+${cat myFile | sed 's/hello/world/g'}
 
 
 ------------------------------------------------------------------------
