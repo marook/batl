@@ -2,9 +2,32 @@ batl
 
 A templating language based on bash shell scripts.
 
-1) Usage
+1) Installation
+2) Usage
+3) Copying
+
+
+------------------------------------------------------------------------
+Installation
+
+To install batl for all users on your system type:
+$ sudo make install
+
+Installing batl for your current user can be done by specifying a custom
+prefix. Make sure the prefix path is the correct one for your system:
+$ make PREFIX=~/.local install
+
 
 ------------------------------------------------------------------------
 Usage
 
-$ batl.sh < template.file
+After installation you can type:
+$ batl < template.file
+
+batl will render the template to stdout.
+
+
+------------------------------------------------------------------------
+Copying
+
+See the LICENSE file.

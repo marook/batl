@@ -1,3 +1,4 @@
+PREFIX=/usr/local
 
 .PHONY: all
 all:
@@ -8,6 +9,9 @@ clean:
 
 .PHONY: test
 test: target/test/multiLine.success target/test/multipleExpressions.success
+
+.PHONY: install
+install: $(PREFIX)/bin/batl
 
 target/test/multiLine.success: examples/multiLine examples/multiLine.expected batl.sh
 	mkdir -p `dirname "$@"`
@@ -20,3 +24,6 @@ target/test/multipleExpressions.success: examples/multipleExpressions examples/m
 	./batl.sh < "examples/multipleExpressions" > "target/test/multipleExpressions.out"
 	cmp "target/test/multipleExpressions.out" "examples/multipleExpressions.expected"
 	touch "$@"
+
+$(PREFIX)/bin/batl: batl.sh
+	install "$^" "$@"
