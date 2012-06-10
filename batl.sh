@@ -27,22 +27,20 @@ fail() {
 
 # TODO the [^$]* match should be a non greedy .* match. right now we have
 # a bug which can be reproduced using the examples/dollar template.
-LINE_PATTERN='^\([^$]*\)\([$]{\([^}]*\)}\)\(.*\)$'
+LINE_PATTERN='([^$]*)[$]\{([^\}]*)\}(.*)'
 
 while read line
 do
     while [ -n "$line" ]
     do
-	match=`echo "$line" | sed -e "s/$LINE_PATTERN/\2/"`
-	cmd=`echo "$line" | sed -e "s/$LINE_PATTERN/\3/"`
-
-	if [ "$match" != "\${$cmd}" ]
+	if [[ ! $line =~ $LINE_PATTERN ]]
 	then
 	    break
 	fi
 
-	prefix=`echo "$line" | sed -e "s/$LINE_PATTERN/\1/"`
-	line=`echo "$line" | sed -e "s/$LINE_PATTERN/\4/"`
+	prefix=${BASH_REMATCH[1]}
+	cmd=${BASH_REMATCH[2]}
+	line=${BASH_REMATCH[3]}
 
 	echo -n "$prefix"
 	$cmd
