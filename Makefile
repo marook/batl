@@ -8,7 +8,7 @@ clean:
 	rm -rf target
 
 .PHONY: test
-test: target/test/multiLine.success target/test/multipleExpressions.success target/test/dollar.success
+test: target/test/multiLine.success target/test/multipleExpressions.success target/test/dollar.success target/test/pipe.success
 
 .PHONY: install
 install: $(PREFIX)/bin/batl
@@ -29,6 +29,12 @@ target/test/dollar.success: examples/dollar examples/dollar.expected batl.sh
 	mkdir -p `dirname "$@"`
 	./batl.sh < "examples/dollar" > "target/test/dollar.out"
 	cmp "target/test/dollar.out" "examples/dollar.expected"
+	touch "$@"
+
+target/test/pipe.success: examples/pipe examples/pipe.expected batl.sh
+	mkdir -p `dirname "$@"`
+	./batl.sh < "examples/pipe" > "target/test/pipe.out"
+	cmp "target/test/pipe.out" "examples/pipe.expected"
 	touch "$@"
 
 $(PREFIX)/bin/batl: batl.sh

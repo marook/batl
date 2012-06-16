@@ -43,7 +43,7 @@ do
 	line=${BASH_REMATCH[3]}
 
 	echo -n "$prefix"
-	$cmd
+	bash -c "$cmd"
     done
 
     echo "$line"
