@@ -27,7 +27,7 @@ fail() {
 
 # TODO the [^$]* match should be a non greedy .* match. right now we have
 # a bug which can be reproduced using the examples/dollar template.
-LINE_PATTERN='([^$]*)[$]\{([^\}]*)\}(.*)'
+LINE_PATTERN='([^$]*)([$][$]?)\{([^\}]*)\}(.*)'
 
 while read line
 do
@@ -39,11 +39,19 @@ do
 	fi
 
 	prefix=${BASH_REMATCH[1]}
-	cmd=${BASH_REMATCH[2]}
-	line=${BASH_REMATCH[3]}
+        cmdPrefix=${BASH_REMATCH[2]}
+	cmd=${BASH_REMATCH[3]}
+	line=${BASH_REMATCH[4]}
 
-	echo -n "$prefix"
-	bash -c "$cmd"
+        if [[ "$cmdPrefix" == '$$' ]]
+        then
+            echo -n "$prefix"
+            echo -n '$'
+            echo -n "{$cmd}"
+        else
+	    echo -n "$prefix"
+	    bash -c "$cmd"
+        fi
     done
 
     echo "$line"
