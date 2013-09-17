@@ -29,18 +29,18 @@ fail() {
 # a bug which can be reproduced using the examples/dollar template.
 LINE_PATTERN='([^$]*)[$]\{([^\}]*)\}(.*)'
 
-while read line
+while IFS= read line
 do
     while [ -n "$line" ]
     do
-	if [[ ! $line =~ $LINE_PATTERN ]]
+	if [[ ! "$line" =~ $LINE_PATTERN ]]
 	then
 	    break
 	fi
 
-	prefix=${BASH_REMATCH[1]}
-	cmd=${BASH_REMATCH[2]}
-	line=${BASH_REMATCH[3]}
+	prefix="${BASH_REMATCH[1]}"
+	cmd="${BASH_REMATCH[2]}"
+	line="${BASH_REMATCH[3]}"
 
 	echo -n "$prefix"
 	bash -c "$cmd"
