@@ -1,16 +1,15 @@
 #!/bin/bash
 #
-# Copyright 2012 Markus Pielmeier
-# Copyright 2013 Dirk Messetat 
+# Copyright 2013 Dirk Messetat
 #
-# This file is part of batl.
+# This file is part of datl (dirks modified version on batl :).
 #
-# batl utils is free software: you can redistribute it and/or modify
+# datl utils is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
 # the Free Software Foundation, either version 3 of the License, or
 # (at your option) any later version.
 #
-# batl is distributed in the hope that it will be useful,
+# datl is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
@@ -19,5 +18,5 @@
 # along with batl.  If not, see <http://www.gnu.org/licenses/>.
 #
 set -e
-cat $* |sed s/{/\(/g|sed s/}/\)/g|./datl.sh
 
+eval "echo \"$(cat $*)\""
